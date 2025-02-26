@@ -2,10 +2,10 @@
   host: local
   connection: local
   vars:
-    subnet_id:
-    sg_id:
-    zone:
-    ami_id:
+    subnet_id: subnet-0b4de8f2794f2a4e3
+    sg_id: sg-0e94d64240bb1358c
+    #zone:
+    ami_id: ami-09c813fb71547fc4f
     instances:
       - mysql
       - backend
@@ -27,7 +27,7 @@
       instance_type: "t3.micro"
     loop: "{{ instances }}"
     register: ec2_incstances
-    
+
   - name: print the oputput
     ansible.builtin.debug:
       msg: "{{ ec2_instances}}"
