@@ -4,7 +4,7 @@
   vars:
     subnet_id: subnet-0b4de8f2794f2a4e3
     sg_id: sg-0e94d64240bb1358c
-    #zone:
+    zone: durgay.shop
     ami_id: ami-09c813fb71547fc4f
     instances:
       - mysql
@@ -31,4 +31,29 @@
   - name: print the output
     ansible.builtin.debug:
       msg: "{{ ec2_instances }}"
+
+  - name: create r52 records
+    amazon.aws.route53:
+      tate: present
+      zone: "{{ zone }}"
+      record: "{{ item.item }}.{{ zone }}" #mysql.durgay.shop
+      type: A
+      ttl: 1
+      value: "{{ item.instances[0].private_ip_address }}"
+      wait: true
+      overwrite: true
+    loop: "{{ ec2_instances.results }}"
+
+  - name: create r53 public record for frontend
+    amazon.aws.route53:
+      state: present
+      zone: "{{ zone }}"
+      record: "{{ zone }}" #durgay.shop
+      type: A
+      ttl: 1
+      value: "{{ item.instances[0].public_ip_address }}"
+      wait: true
+      overwrite: true
+    loop: "{{ ec2_instances.results }}"
+    when: item.item == "frontend" #when keyword should not have {{}}
 
