@@ -34,7 +34,7 @@
 
   - name: create r52 records
     amazon.aws.route53:
-      tate: present
+      state: present
       zone: "{{ zone }}"
       record: "{{ item.item }}.{{ zone }}" #mysql.durgay.shop
       type: A
