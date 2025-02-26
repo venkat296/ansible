@@ -1,5 +1,5 @@
 - name: install ec2 and r53
-  host: local
+  hosts: local
   connection: local
   vars:
     subnet_id: subnet-0b4de8f2794f2a4e3
