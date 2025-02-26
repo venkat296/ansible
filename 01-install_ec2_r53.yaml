@@ -26,9 +26,9 @@
       image_id: "{{ ami_id }}"
       instance_type: "t3.micro"
     loop: "{{ instances }}"
-    register: ec2_incstances
+    register: ec2_instances
 
-  - name: print the oputput
+  - name: print the output
     ansible.builtin.debug:
       msg: "{{ ec2_instances }}"
 
